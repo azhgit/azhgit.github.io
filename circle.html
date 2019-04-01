@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Circle</title>
+    <style>
+      /* 1.圓角的設定不會出現尖角
+         2.所以兩兩相加的半徑，如果長度超過直徑，半徑會重新計算，計算方式會以相加最長的直徑當作分母來換算原本的半徑，看那個半徑占了多少百分比，再用原本DIV的長度乘以所占百分比即可以得所需的px。 */
+
+      .b1 {
+        width: 100px;
+        height: 100px;
+        background-color: #f00;
+        border-radius: 100px 50px 50px 100px;
+        margin: 20px;
+        /* 此例子: 相加最常兩border-radius => 200px > 100 (最大正常半徑)
+          ，所以200在各圓角 各佔50% 25% 25% 50% => 換回各圓角像素佔邊長的半徑比例50 25 25 50; */
+      }
+      .b2 {
+        width: 100px;
+        height: 100px;
+        background-color: #f00;
+        border-radius: 200px;
+        /* 200+200=400 > 100 => 200/400= 50% => 佔各邊 100px*50% = 50px */
+        margin: 20px;
+      }
+      .b3 {
+        width: 100px;
+        height: 100px;
+        background-color: #f00;
+        border-radius: 50%;
+        /* 所以用50%即可變圓形 */
+        margin: 20px;
+      }
+      /* 8個值(x1 x2 x3 x4/ y1 y2 y3 y4) */
+      .b4 {
+        width: 300px;
+        height: 300px;
+        background-color: #f00;
+        border-radius: 50% / 10px 30px 60px 100px;
+        margin: 20px;
+      }
+      /* 雞蛋形 : x1+x2、x3+x4、y1+y4、y2+y3相加的值，不要超過100%，超過100%，全部的角度會被重新計算。*/
+      .b5 {
+        width: 220px;
+        height: 300px;
+        background-color: #aaa;
+        border-radius: 50% / 60% 60% 40% 40%;
+        margin: 20px;
+      }
+      /* 膠囊型 : 切忌用比例，要用大於短邊的一半，為了rwd盡量取大一點*/
+      .b6 {
+        width: 200px;
+        height: 80px;
+        background-color: #aaa;
+        border-radius: 1000px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="b1"></div>
+    <div class="b2"></div>
+    <div class="b3"></div>
+    <div class="b4"></div>
+    <div class="b5"></div>
+    <div class="b6"></div>
+  </body>
+</html>
