@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Andrew Huang, full-stack engineer</title>
-<meta name="description" content="Andrew Huang is a full-stack engineer in Vancouver building production AI systems with Python, FastAPI, and React.">
-<meta property="og:title" content="Andrew Huang, full-stack engineer">
+<title>Andrew Huang, software engineer</title>
+<meta name="description" content="Andrew Huang is a software engineer in Vancouver building production AI systems with Python, FastAPI, and React.">
+<meta property="og:title" content="Andrew Huang, software engineer">
 <meta property="og:description" content="Live AI systems: a phone agent you can call, a flight-emissions reporting platform, and a RAG course search.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://azhgit.github.io/">
 <meta property="og:image" content="https://azhgit.github.io/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Andrew Huang, full-stack engineer in Vancouver, building production AI systems.">
+<meta property="og:image:alt" content="Andrew Huang, software engineer in Vancouver, building production AI systems.">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://azhgit.github.io/">
 <link rel="icon" href="favicon.ico" sizes="32x32">
@@ -30,13 +30,11 @@
   src: url(fonts/archivo-latin.woff2) format("woff2");
 }
 :root {
-  --paper: #f6f7fb;
+  --paper: #f4f6fb;
+  --sheet: #fbfcfe;
   --ink: #161f45;
-  --muted: #565e7e;
+  --muted: #545c7c;
   --wire: #3942b0;
-  --rule: #d9ddec;
-  --sheet: #eceffa;
-  --grid: rgba(57, 66, 176, 0.08);
   --node: #ffffff;
   --signal: #e8962e;
   --signal-ink: #94570a;
@@ -45,116 +43,110 @@
   --night-ink: #eef0fb;
   --night-muted: #b3b9da;
   --night-wire: #97a1ff;
-  --night-grid: rgba(151, 161, 255, 0.09);
-  --rail: 240px;
-  --gutter: clamp(32px, 5vw, 64px);
+  --gutter: clamp(28px, 4.5vw, 64px);
+  --measure: 52ch;
+  --line: rgba(22, 31, 69, 0.12);
+  --line-strong: rgba(22, 31, 69, 0.25);
+  --grid-line: rgba(57, 66, 176, 0.11);
+  --night-line: rgba(151, 161, 255, 0.32);
+  --night-grid: rgba(151, 161, 255, 0.14);
+  --signal-hover: #f3ad5a;
+  --select: rgba(232, 150, 46, 0.4);
+  --ease: 0.15s ease-out;
+  --card-line: rgba(22, 31, 69, 0.14);
   color-scheme: light;
+  scrollbar-color: var(--wire) var(--paper);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
+/* Below the navy header the page sits on drafting paper: a plain 32px grid */
 body {
-  background: var(--paper);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 32px 32px;
   color: var(--ink);
   font-family: "Archivo", system-ui, sans-serif;
   font-size: 18px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
 }
-a {
-  color: var(--wire);
-  text-decoration: underline 1px;
-  text-underline-offset: 0.2em;
-}
+::selection { background: var(--select); color: var(--ink); }
+a { color: var(--wire); text-decoration: underline 1px; text-underline-offset: 0.2em; }
 a:hover { text-decoration-thickness: 2px; }
-:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
-.wrap { max-width: 1080px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px); }
+a, summary, .button {
+  transition: color var(--ease), background-color var(--ease), border-color var(--ease), text-decoration-color var(--ease), text-decoration-thickness var(--ease);
+}
+:focus-visible { outline: 2px solid var(--wire); outline-offset: 3px; }
+.night :focus-visible { outline-color: var(--signal); }
+h1, h2, h3, .summary { text-wrap: balance; }
+p, li, dd, td { text-wrap: pretty; }
+.nw { white-space: nowrap; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 clamp(14px, 3.5vw, 40px); }
 
-/* Drafting-sheet bands: the hero and the contact section */
+/* Small field labels, as printed in a title block */
+.lbl { color: var(--muted); font-size: 12.5px; font-stretch: 87.5%; font-weight: 500; letter-spacing: 0.01em; }
+.night .lbl { color: var(--night-muted); }
+
+/* Navy fill, used where the sheet names something */
 .night {
   background-color: var(--night);
-  background-image:
-    linear-gradient(var(--night-grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--night-grid) 1px, transparent 1px);
-  background-size: 32px 32px;
   color: var(--night-ink);
 }
+.night ::selection { background: var(--select); color: var(--night-ink); }
 .night a { color: var(--night-wire); }
+.night a:not(.button):hover { color: var(--signal); }
 
 /* Navigation */
-.top { display: flex; justify-content: space-between; align-items: center; height: 72px; font-size: 16px; }
-.top .home { color: var(--night-ink); font-weight: 650; font-stretch: 112.5%; text-decoration: none; }
-.top nav { display: flex; align-items: center; gap: 28px; }
-.top nav a { color: var(--night-muted); text-decoration: none; }
-.top nav a:hover { color: var(--night-ink); }
+.top { position: relative; display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; column-gap: 26px; padding-top: 10px; font-size: 17px; font-weight: 500; }
+.top .nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; }
+.top .nav-icon + .nav-icon { margin-left: -14px; }
+.nav-sep { width: 1px; height: 20px; background: var(--night-line); }
+.top a { display: inline-block; padding: 11px 0; text-decoration: none; }
 
-/* Hero */
-.hero { padding-bottom: clamp(48px, 7vw, 88px); }
+/* First viewport: who, what role, then the live demo drawn as its call path */
+.hero { padding-bottom: clamp(48px, 6vw, 80px); }
 .hero h1 {
-  margin-top: clamp(40px, 7vw, 88px);
+  margin-top: clamp(24px, 4vw, 48px);
   font-size: clamp(52px, 10.4vw, 112px);
   font-stretch: 125%;
   font-weight: 700;
-  line-height: 0.88;
+  line-height: 0.9;
   letter-spacing: -0.03em;
 }
-.intro { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: var(--gutter); align-items: end; margin-top: clamp(28px, 4vw, 44px); }
-.lead { max-width: 34em; color: var(--night-muted); font-size: clamp(19px, 2vw, 22px); line-height: 1.45; }
-.lead + .lead { margin-top: 14px; }
-.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; margin-top: 32px; }
-.night .button {
-  padding: 13px 24px;
-  border-radius: 6px;
-  background: var(--night-ink);
-  color: var(--night);
-  font-weight: 600;
-  text-decoration: none;
-}
-.night .button:hover { background: var(--signal); }
-
-.call { padding: 22px 24px 24px; border: 1px solid rgba(151, 161, 255, 0.35); border-radius: 10px; background: var(--night-node); }
-.onair { display: flex; align-items: center; gap: 8px; color: var(--signal); font-size: 14px; font-weight: 600; }
-.onair::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 10px 2px rgba(232, 150, 46, 0.5); }
-.night .number {
-  display: block;
-  margin-top: 6px;
-  color: var(--night-ink);
-  font-size: 34px;
-  font-stretch: 112.5%;
-  font-weight: 650;
-  letter-spacing: -0.01em;
-  text-decoration: none;
-}
-.night .number:hover { color: var(--signal); }
-.call .note { margin-top: 8px; color: var(--night-muted); font-size: 15px; line-height: 1.45; }
-
-/* The call path: a signal travels from caller to reply */
-.signal { position: relative; margin-top: clamp(48px, 7vw, 80px); }
+.lead { max-width: 38em; margin-top: clamp(20px, 3vw, 32px); color: var(--night-muted); font-size: clamp(19px, 2vw, 22px); line-height: 1.5; }
+.lead strong { color: var(--night-ink); font-weight: 600; }
+.demo { display: flex; flex-direction: column; margin-top: clamp(48px, 6vw, 72px); }
+.fine { max-width: 62ch; margin-top: 10px; font-size: 15px; }
+.signal { position: relative; overflow: hidden; }
 .signal ol { position: relative; display: flex; justify-content: space-between; gap: 14px; list-style: none; }
-.signal ol::before { content: ""; position: absolute; top: 50%; left: 0; right: 0; border-top: 1.5px solid var(--night-wire); opacity: 0.55; }
+.signal ol::before { content: ""; position: absolute; top: 50%; left: 0; right: 0; border-top: 1.5px solid var(--ink); }
 .signal li {
   position: relative;
   z-index: 1;
-  padding: 10px 14px;
-  border: 1.5px solid var(--night-wire);
+  padding: 12px 16px;
+  border: 1.5px solid var(--ink);
   border-radius: 4px;
-  background: var(--night);
+  background: var(--node);
 }
-.signal li.end { align-self: center; padding: 8px 16px; border-style: dashed; border-radius: 999px; }
-.signal b { display: block; color: var(--night-ink); font-size: 15px; font-weight: 650; line-height: 1.3; }
-.signal span { display: block; color: var(--night-muted); font-size: 13px; font-stretch: 87.5%; line-height: 1.35; }
+.signal li.end { display: flex; align-items: center; border-style: dashed; border-radius: 999px; }
+.signal b { display: block; font-size: 17px; font-weight: 650; line-height: 1.3; }
+.signal span { display: block; color: var(--muted); font-size: 14px; font-stretch: 87.5%; line-height: 1.35; }
 .pulse {
   position: absolute;
   top: 50%;
   left: 0;
-  width: 10px;
-  height: 10px;
-  margin: -5px 0 0 -5px;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
   border-radius: 50%;
   background: var(--signal);
-  box-shadow: 0 0 0 5px rgba(232, 150, 46, 0.22), 0 0 18px 4px rgba(232, 150, 46, 0.45);
   animation: travel 5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
+.pulse::before { content: ""; position: absolute; top: 50%; right: 100%; width: 24px; margin-top: -1px; border-top: 2px solid var(--signal); }
 @keyframes travel {
   0% { left: 0; opacity: 0; }
   6% { opacity: 1; }
@@ -162,201 +154,324 @@ a:hover { text-decoration-thickness: 2px; }
   76%, 100% { left: 100%; opacity: 0; }
 }
 
-/* Sections */
-section { padding-top: clamp(64px, 8vw, 104px); }
-h2 {
-  margin-bottom: clamp(32px, 5vw, 56px);
-  font-size: clamp(28px, 3.4vw, 36px);
-  font-stretch: 125%;
-  font-weight: 650;
+/* The number hangs off the "You call" terminal on an amber leader */
+.dial { margin-left: 34px; padding: 22px 0 0 26px; }
+.number {
+  position: relative;
+  width: fit-content;
+  color: var(--ink);
+  font-size: clamp(30px, 4.4vw, 46px);
+  font-stretch: 112.5%;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
   letter-spacing: -0.015em;
   line-height: 1.1;
+  white-space: nowrap;
 }
-.rail { display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); column-gap: var(--gutter); }
-
-/* Projects */
-.project { padding-top: 36px; border-top: 1px solid var(--rule); }
-.project + .project { margin-top: clamp(64px, 9vw, 104px); }
-.project-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 24px; }
-.project h3 { font-size: clamp(30px, 3.6vw, 40px); font-stretch: 125%; font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; }
-.meta { color: var(--muted); font-size: 16px; }
-.project-body { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: var(--gutter); align-items: start; margin-top: 28px; }
-.summary { font-size: 20px; line-height: 1.45; }
-.notes { list-style: none; }
-.project .notes { margin-top: 22px; }
-.notes li { position: relative; padding-left: 22px; font-size: 17px; }
-.notes li + li { margin-top: 10px; }
-.notes li::before { content: ""; position: absolute; left: 0; top: 0.78em; width: 10px; border-top: 1.5px solid var(--wire); }
-.links { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 22px; margin-top: 24px; font-size: 16px; }
-.live { display: inline-flex; align-items: center; gap: 7px; color: var(--signal-ink); font-size: 15px; font-weight: 600; }
-.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--signal); }
-.stack { margin-top: 16px; color: var(--muted); font-size: 15px; }
-
-/* Drawing sheets: each system drawn top to bottom, with callouts for what was measured or fixed */
-.sheet {
-  padding: 28px 24px;
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  background-color: var(--sheet);
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-.vflow { list-style: none; }
-.vflow li { position: relative; display: grid; grid-template-columns: 168px minmax(0, 1fr); align-items: center; }
-.vflow li + li { margin-top: 28px; }
-.vflow li + li::before { content: ""; position: absolute; top: -28px; left: 84px; height: 28px; border-left: 1.5px solid var(--wire); }
-.vflow li + li::after {
+.number::before {
   content: "";
   position: absolute;
-  top: -7px;
-  left: 79.75px;
+  left: -26px;
+  bottom: 50%;
+  width: 18px;
+  height: calc(50% + 22px);
+  border-left: 1.5px dashed var(--signal-ink);
+  border-bottom: 1.5px dashed var(--signal-ink);
+}
+.number::after { content: ""; position: absolute; left: -10px; top: 50%; width: 7px; height: 7px; margin-top: -3.25px; border-radius: 50%; background: var(--signal); }
+.dial-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; margin-top: 14px; font-size: 16px; }
+.dial-actions a:not(.button) { display: inline-block; padding: 11px 0; }
+.copied { margin-top: 8px; color: var(--signal-ink); font-size: 15px; font-weight: 600; }
+.copied:empty { display: none; }
+
+.button { display: inline-block; padding: 12px 22px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+.button-primary { background: var(--signal); color: var(--night); }
+.button-primary:hover { background: var(--signal-hover); }
+.button-quiet { border: 1.5px solid var(--ink); color: var(--ink); background: var(--node); }
+.button-quiet:hover { background: var(--ink); color: var(--paper); }
+.button:active { transform: translateY(1px); }
+
+/* Numbered drawing notes */
+.drawing-notes { list-style: none; counter-reset: note; }
+.drawing-notes li { position: relative; padding-left: 30px; counter-increment: note; }
+.drawing-notes li + li { margin-top: 10px; }
+.drawing-notes li::before {
+  content: counter(note) ".";
+  position: absolute;
+  left: 0;
+  color: var(--wire);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Sections */
+section { padding-top: clamp(56px, 7vw, 96px); }
+h2 {
+  margin-bottom: clamp(24px, 3.5vw, 40px);
+  font-size: clamp(32px, 4.6vw, 52px);
+  font-stretch: 125%;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+/* Each project is its own sheet: title strip on top, drawing and notes below */
+.dwg { position: relative; border: 1px solid var(--card-line); background: var(--sheet); }
+/* Corner ticks, like the trim marks on a printed drawing sheet */
+.dwg::before, .dwg::after { content: ""; position: absolute; width: 16px; height: 16px; border: 0 solid var(--wire); pointer-events: none; }
+.dwg::before { top: -6px; left: -6px; border-top-width: 2px; border-left-width: 2px; }
+.dwg::after { bottom: -6px; right: -6px; border-bottom-width: 2px; border-right-width: 2px; }
+.dwg + .dwg { margin-top: clamp(40px, 6vw, 72px); }
+.strip { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 1.25fr); border-bottom: 1px solid var(--line); }
+.strip > * { padding: 14px 18px 16px; }
+.strip > * + * { border-left: 1px solid var(--line); }
+.strip > .night { position: relative; isolation: isolate; }
+.strip > .night::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  -webkit-mask-image: radial-gradient(circle at 100% 100%, #000 0, transparent 62%);
+  mask-image: radial-gradient(circle at 100% 100%, #000 0, transparent 62%);
+  background-image:
+    linear-gradient(var(--night-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--night-grid) 1px, transparent 1px);
+  background-size: 16px 16px;
+  background-position: -1px -1px;
+}
+.strip h3 { font-size: clamp(24px, 2.6vw, 30px); font-stretch: 125%; font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; }
+.strip .meta { margin-top: 6px; color: var(--night-muted); font-size: 14px; }
+.result { margin-top: 2px; color: var(--signal-ink); font-size: 17px; font-weight: 650; font-variant-numeric: tabular-nums; line-height: 1.35; }
+.links { display: flex; flex-wrap: wrap; align-items: center; column-gap: 18px; font-size: 16px; }
+.links a { display: inline-block; padding: 10px 0; }
+.links .hint { flex-basis: 100%; color: var(--muted); font-size: 14px; }
+.live { display: inline-flex; align-items: center; gap: 7px; color: var(--signal-ink); font-size: 15px; font-weight: 650; }
+.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--signal); }
+.status-text { margin-top: 2px; font-size: 16px; font-weight: 600; }
+
+.dwg-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.drawing { padding: 28px 26px 22px; border-right: 1px solid var(--line); }
+.drawing figcaption { margin-top: 20px; color: var(--muted); font-size: 14px; }
+.dwg-text { padding: 26px 28px 28px; }
+.summary { max-width: var(--measure); font-size: 19px; line-height: 1.5; }
+.dwg-text .lbl { margin: 22px 0 8px; }
+.dwg-text .drawing-notes { max-width: var(--measure); }
+.dwg-text .drawing-notes li { font-size: 16.5px; }
+.stack { max-width: var(--measure); margin-top: 20px; font-size: 15px; }
+.stack .lbl { display: block; }
+
+/* Architecture drawings: one wire down the nodes, amber callouts for what was measured or fixed */
+.vflow { list-style: none; }
+.vflow li { position: relative; display: grid; grid-template-columns: 172px minmax(0, 1fr); align-items: center; }
+.vflow li + li { margin-top: 28px; }
+.vflow li::before { content: ""; position: absolute; top: 0; bottom: -28px; left: var(--node-mid, 85.25px); border-left: 1.5px solid var(--wire); }
+.vflow li:first-child::before { top: 50%; }
+.vflow li:last-child::before { bottom: 50%; }
+.node { position: relative; z-index: 1; padding: 9px 12px 10px; border: 1.5px solid var(--wire); border-radius: 8px; background: var(--node); }
+.vflow li + li .node::before {
+  content: "";
+  position: absolute;
+  top: -8.5px;
+  left: 50%;
+  margin-left: -5px;
   border-style: solid;
   border-width: 7px 5px 0;
   border-color: var(--wire) transparent transparent;
 }
-.node { padding: 9px 12px 10px; border: 1.5px solid var(--wire); border-radius: 4px; background: var(--node); }
 .node b { display: block; font-size: 15px; font-weight: 650; line-height: 1.3; }
 .node span { display: block; color: var(--muted); font-size: 13px; font-stretch: 87.5%; line-height: 1.35; }
-.callout { position: relative; padding-left: 48px; font-size: 14px; font-stretch: 87.5%; line-height: 1.35; }
-.callout::before { content: ""; position: absolute; top: 50%; left: 0; width: 34px; border-top: 1.5px dashed var(--signal-ink); }
+.callout { position: relative; z-index: 2; padding-left: 44px; font-size: 14px; font-stretch: 87.5%; line-height: 1.35; }
+.callout::before { content: ""; position: absolute; top: 50%; left: 0; width: 32px; border-top: 1.5px dashed var(--signal-ink); }
 .callout::after { content: ""; position: absolute; top: 50%; left: -4px; width: 7px; height: 7px; margin-top: -3.25px; border-radius: 50%; background: var(--signal); }
-.sheet figcaption { margin-top: 22px; color: var(--muted); font-size: 14px; }
 
-/* Experience timeline */
-.timeline { list-style: none; }
-.timeline > li { position: relative; padding-bottom: 56px; }
-.timeline > li:last-child { padding-bottom: 0; }
-.timeline > li::before {
-  content: "";
-  position: absolute;
-  top: 13px;
-  bottom: -13px;
-  left: calc(var(--rail) + var(--gutter) / 2 - 0.75px);
-  border-left: 1.5px solid var(--rule);
+/* Test log: one simulated call, printed like a test record */
+.testlog { border-top: 1px solid var(--line); }
+.testlog summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; padding: 14px 28px; color: var(--wire); font-weight: 650; cursor: pointer; }
+.summary-link { text-decoration: underline 1px; text-underline-offset: 0.2em; transition: text-decoration-thickness var(--ease); }
+.testlog summary::marker { color: var(--signal-ink); }
+.testlog summary:hover .summary-link { text-decoration-thickness: 2px; }
+.testlog-note { max-width: 70ch; padding: 0 28px; color: var(--muted); font-size: 15px; }
+.transcript { max-width: 900px; margin: 16px 28px 0; list-style: none; border-top: 1px solid var(--line); }
+.transcript li { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 0 16px; padding: 10px 0; border-bottom: 1px dashed var(--line-strong); }
+.transcript p { max-width: 68ch; font-size: 16px; }
+.who { color: var(--muted); font-size: 13px; font-stretch: 87.5%; font-weight: 600; padding-top: 3px; }
+.who.agent { color: var(--wire); }
+.transcript .tool .who { color: var(--signal-ink); }
+.transcript code { display: block; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 13.5px; overflow-wrap: anywhere; }
+.transcript code.ret { margin-top: 2px; color: var(--muted); }
+.testlog-result { max-width: 70ch; padding: 14px 28px 22px; color: var(--signal-ink); font-size: 16px; font-weight: 600; }
+.testlog-result .lbl { display: block; }
+
+/* Experience: a ruled table, newest role on top */
+.table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--card-line); background: var(--sheet); }
+.table th, .table td { padding: 14px 18px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.table tr > * + * { border-left: 1px solid var(--line); }
+.table tbody tr:last-child > * { border-bottom: 0; }
+.table thead th { padding: 8px 18px; color: var(--muted); font-size: 12.5px; font-stretch: 87.5%; font-weight: 500; }
+.revs .date { width: 168px; font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.revs h3 { font-size: 20px; font-stretch: 112.5%; font-weight: 650; line-height: 1.25; }
+.revs .org { margin-top: 2px; color: var(--muted); font-size: 16px; }
+.bullets { max-width: 62ch; margin-top: 12px; list-style: none; }
+.bullets li { position: relative; padding-left: 22px; font-size: 16.5px; }
+.bullets li + li { margin-top: 8px; }
+.bullets li::before { content: ""; position: absolute; left: 0; top: 0.78em; width: 10px; border-top: 1.5px solid var(--wire); }
+
+/* Skills as a parts list, education as qualifications */
+.parts th[scope="row"] { width: 320px; font-size: 16px; font-stretch: 112.5%; font-weight: 650; }
+.parts td { color: var(--muted); font-size: 16.5px; }
+@media (min-width: 641px) { .parts th[scope="row"] { white-space: nowrap; } }
+.parts + .parts { margin-top: 24px; }
+
+/* Contact: the title block's fields, laid open on the navy band and split by hairlines */
+.contact { margin-top: clamp(64px, 8vw, 104px); padding-bottom: clamp(40px, 5vw, 64px); }
+.endblock { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 2fr) minmax(0, 0.8fr) minmax(0, 1fr); }
+.endblock > * { padding: 2px 28px 0; }
+.endblock > :first-child { padding-left: 0; }
+.endblock > * + * { border-left: 1px solid var(--night-line); }
+.eb-title { font-size: clamp(24px, 2.6vw, 30px); font-stretch: 125%; font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; }
+.eb-name .meta { margin-top: 6px; color: var(--night-muted); font-size: 14px; }
+.endblock a { display: inline-block; padding: 8px 0 10px; color: var(--night-ink); font-size: 18px; font-weight: 600; text-decoration: underline 1.5px var(--signal); text-underline-offset: 0.2em; }
+.endblock a:hover { text-decoration-thickness: 2.5px; }
+.endblock a:not(.email) { white-space: nowrap; }
+.endblock .email { font-size: clamp(18px, 1.7vw, 20px); font-weight: 650; text-decoration-thickness: 2px; }
+.eb-tip { color: var(--signal); font-size: 14px; font-weight: 600; }
+.eb-tip:empty { display: none; }
+.endblock .email:hover { text-decoration-thickness: 3px; }
+footer .wrap { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; padding-bottom: 24px; color: var(--night-muted); font-size: 14px; }
+footer.night { border-top: 1px solid var(--night-line); }
+footer a { display: inline-block; padding: 12px 0; }
+.to-top { display: inline-flex; align-items: center; gap: 6px; }
+.to-top svg { transition: transform 0.2s ease-out; }
+.to-top:hover svg { transform: translateY(-2px); }
+
+@media (max-width: 1000px) {
+  .dwg-body { grid-template-columns: minmax(0, 1fr); }
+  .drawing { order: 1; border-right: 0; border-top: 1px solid var(--line); }
 }
-.timeline > li:last-child::before { display: none; }
-.timeline > li::after {
-  content: "";
-  position: absolute;
-  top: 7px;
-  left: calc(var(--rail) + var(--gutter) / 2 - 6px);
-  width: 12px;
-  height: 12px;
-  border: 1.5px solid var(--wire);
-  border-radius: 50%;
-  background: var(--paper);
-}
-.when { padding-top: 2px; color: var(--muted); font-size: 16px; }
-.timeline h3 { font-size: 21px; font-stretch: 112.5%; font-weight: 650; line-height: 1.25; }
-.org { margin: 4px 0 14px; color: var(--muted); font-size: 16px; }
-
-/* Skills and education */
-dl.rail { row-gap: 20px; }
-dl.rail dt { font-weight: 650; font-stretch: 112.5%; }
-dl.rail dd { color: var(--muted); font-size: 17px; }
-
-/* Contact */
-.contact { margin-top: clamp(64px, 8vw, 104px); padding: clamp(64px, 9vw, 112px) 0; }
-.contact p { max-width: 30em; color: var(--night-muted); font-size: clamp(20px, 2.2vw, 24px); line-height: 1.45; }
-.night .email {
-  display: inline-block;
-  margin-top: 24px;
-  color: var(--night-ink);
-  font-size: clamp(22px, 5.2vw, 56px);
-  font-stretch: 112.5%;
-  font-weight: 650;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  text-decoration: underline 2px var(--signal);
-  text-underline-offset: 0.18em;
-}
-.night .email:hover { text-decoration-thickness: 3px; }
-.contact .elsewhere { display: flex; gap: 28px; margin-top: 28px; font-size: 18px; }
-footer { border-top: 1px solid rgba(151, 161, 255, 0.2); }
-footer .wrap { padding-top: 24px; padding-bottom: 40px; color: var(--night-muted); font-size: 14px; }
-
 @media (max-width: 880px) {
-  .intro, .project-body, .rail { grid-template-columns: minmax(0, 1fr); }
-  .call { max-width: 420px; }
-  .timeline > li { padding-left: 32px; }
-  .timeline > li::before { left: 5.25px; }
-  .timeline > li::after { left: 0; }
-  .when { padding-top: 0; margin-bottom: 4px; }
-  dl.rail { row-gap: 4px; }
-  dl.rail dd { margin-bottom: 16px; }
+  .signal span { display: none; }
+  .signal ol { gap: 10px; }
+  .signal li { padding: 9px 11px; white-space: nowrap; }
+  .signal b { font-size: 15px; }
+  .strip { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .strip > :first-child { grid-column: 1 / -1; }
+  .strip > :nth-child(2) { border-left: 0; }
+  .strip > * + * { border-top: 1px solid var(--line); }
 }
-@media (max-width: 720px) {
+@media (max-width: 640px) {
+  .dial { order: -1; margin: 0 0 0 23px; padding: 0 0 20px 26px; border-left: 1.5px dashed var(--signal-ink); }
+  .number::before { bottom: auto; top: 50%; height: 0; border-left: 0; }
   .signal ol { flex-direction: column; align-items: flex-start; gap: 14px; }
-  .signal ol::before { top: 0; bottom: 0; left: 22px; right: auto; border-top: 0; border-left: 1.5px solid var(--night-wire); }
-  .signal li { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 10px; }
+  .signal ol::before { top: 0; bottom: 0; left: 23px; right: auto; border-top: 0; border-left: 1.5px solid var(--ink); }
+  .signal li { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 10px; white-space: normal; }
+  .signal span { display: inline; }
+  .signal b { font-size: 17px; }
   .signal li.end { align-self: flex-start; }
-  .pulse { left: 22.75px; animation-name: travel-down; }
+  .pulse { left: 23.75px; animation-name: travel-down; }
+  .pulse::before { top: auto; right: auto; bottom: 100%; left: 50%; width: 0; height: 24px; margin: 0 0 0 -1px; border-top: 0; border-left: 2px solid var(--signal); }
   @keyframes travel-down {
     0% { top: 0; opacity: 0; }
     6% { opacity: 1; }
     70% { top: 100%; opacity: 1; }
     76%, 100% { top: 100%; opacity: 0; }
   }
+  .strip { grid-template-columns: minmax(0, 1fr); }
+  .strip > * + * { border-left: 0; }
+  .revs thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .revs tr { display: grid; border-bottom: 1px solid var(--line); }
+  .revs tbody tr:last-child { border-bottom: 0; }
+  .revs td, .revs tr > * + * { border: 0; }
+  .revs .date { width: auto; padding: 14px 12px 0; }
+  .revs td:last-child { padding-top: 6px; }
+  .parts th[scope="row"] { width: 120px; }
+  .table th, .table td { padding: 12px; }
+}
+@media (max-width: 880px) {
+  .endblock { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .endblock > .eb-name, .endblock > .eb-email { grid-column: 1 / -1; }
+  .endblock > * { padding: 16px 0 0; }
+  .endblock > * + * { margin-top: 16px; border-left: 0; border-top: 1px solid var(--night-line); }
+  .endblock > :last-child { padding-left: 20px; border-left: 1px solid var(--night-line); }
 }
 @media (max-width: 480px) {
-  .hide-sm { display: none; }
-  .vflow li { grid-template-columns: 132px minmax(0, 1fr); }
-  .vflow li + li::before { left: 66px; }
-  .vflow li + li::after { left: 61.75px; }
-  .callout { padding-left: 36px; }
-  .callout::before { width: 24px; }
-  .night .email { font-size: 22px; font-stretch: 100%; }
+  .endblock { grid-template-columns: minmax(0, 1fr); }
+  .endblock > :last-child { padding-left: 0; border-left: 0; }
+  .top { column-gap: 16px; }
+  .top .hide-sm { display: none; }
+  .drawing { padding: 22px 14px 18px; }
+  .dwg-text { padding: 22px 16px 24px; }
+  .testlog summary, .testlog-note, .testlog-result { padding-left: 16px; padding-right: 16px; }
+  .transcript { margin: 14px 16px 0; }
+  .transcript li { grid-template-columns: minmax(0, 1fr); }
+  .vflow li { grid-template-columns: 118px minmax(0, 1fr); --node-mid: 58.25px; }
+  .node { padding: 8px 10px 9px; }
+  .callout { padding-left: 34px; }
+  .callout::before { width: 22px; }
+  .parts tr { display: grid; }
+  .parts th[scope="row"] { width: auto; padding-bottom: 0; border-bottom: 0; }
+  .parts td { padding-top: 2px; border-top: 0; border-left: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .to-top svg, a, summary, .button { transition: none; }
   .pulse { display: none; }
 }
+/* The first viewport is the blueprint: navy ground, light line work */
+.hero .top a { color: var(--night-ink); }
+.hero .top a:hover { color: var(--signal); }
+.hero .top .nav-email { padding: 8px 16px; border: 1.5px solid var(--night-ink); border-radius: 8px; }
+.nav-tip { position: absolute; top: 100%; right: 0; margin-top: 6px; padding: 6px 10px; border-radius: 6px; background: var(--night-ink); color: var(--night); font-size: 14px; font-weight: 600; white-space: nowrap; }
+.nav-tip:empty { display: none; }
+.hero .top .nav-email:hover { border-color: var(--signal); color: var(--signal); }
+.hero .signal ol::before { border-color: var(--night-wire); opacity: 0.7; }
+.hero .signal li { border-color: var(--night-wire); background: var(--night); }
+.hero .signal span, .hero .fine { color: var(--night-muted); }
+.hero .number { color: var(--night-ink); }
+.hero .number::before, .hero .dial { border-color: var(--signal); }
+.hero .copied { color: var(--signal); }
+.hero .button-primary { color: var(--night); }
+.hero .button-quiet { border-color: var(--night-ink); color: var(--night-ink); background: transparent; }
+.hero .button-quiet:hover { background: var(--night-ink); color: var(--night); }
 </style>
 </head>
 <body>
 
 <header class="hero night">
   <div class="wrap">
-    <div class="top">
-      <a class="home" href="#">Andrew Huang</a>
-      <nav aria-label="Sections">
-        <a href="#work">Work</a>
-        <a href="#experience" class="hide-sm">Experience</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </div>
+    <nav class="top" aria-label="Sections">
+      <a href="#work">Work</a>
+      <a href="#experience" class="hide-sm">Experience</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="mailto:anzheng.huang.dev@gmail.com" class="nav-email" id="email-button">Email me</a>
+      <a href="https://github.com/azhgit" target="_blank" rel="noopener" class="nav-icon" aria-label="GitHub"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://linkedin.com/in/ahuang-datasci" target="_blank" rel="noopener" class="nav-icon" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <span class="nav-tip" id="email-copied" role="status" aria-live="polite"></span>
+    </nav>
 
     <h1>Andrew Huang</h1>
+    <p class="lead"><strong>Software engineer in Vancouver, looking for <span class="nw">full-stack</span> and AI engineering roles here or remote.</strong> Shipping production web apps since 2018; three of my AI systems are live below.</p>
 
-    <div class="intro">
-      <div>
-        <p class="lead">Full-stack engineer in Vancouver. Over five years shipping production web apps in Vue, Java, and Python, and now building AI systems end to end with FastAPI and React.</p>
-        <p class="lead">Three of them are live: <a href="#voiceagent">a phone agent you can call</a>, <a href="#carbontrace">a flight-emissions reporting platform</a>, and <a href="#courseflow">a course search built on RAG</a>.</p>
-        <div class="actions">
-          <a class="button" href="mailto:anzheng.huang.dev@gmail.com">Email me</a>
-          <a href="https://github.com/azhgit" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://linkedin.com/in/ahuang-datasci" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
+    <div class="demo">
+      <div class="signal">
+        <ol aria-label="What happens when you call my AI phone agent">
+          <li class="end"><b>You call</b></li>
+          <li><b>Twilio</b> <span>streams the audio</span></li>
+          <li><b>Deepgram</b> <span>speech to text</span></li>
+          <li><b>Claude</b> <span>decides and books</span></li>
+          <li><b>ElevenLabs</b> <span>text to speech</span></li>
+          <li class="end"><b>You hear the reply</b></li>
+        </ol>
+        <i class="pulse" aria-hidden="true"></i>
       </div>
-      <aside class="call" aria-label="Live demo">
-        <p class="onair">Live demo</p>
-        <a class="number" href="tel:+17786513549">(778) 651-3549</a>
-        <p class="note">Call my AI phone agent. It answers as a car dealership’s after-hours service line: describe a problem with your car and it books you into a demo schedule.</p>
-      </aside>
-    </div>
-
-    <div class="signal">
-      <ol aria-label="What happens when you call">
-        <li class="end"><b>You call</b></li>
-        <li><b>Twilio</b> <span>streams the audio</span></li>
-        <li><b>Deepgram</b> <span>speech to text</span></li>
-        <li><b>Claude</b> <span>decides and books</span></li>
-        <li><b>ElevenLabs</b> <span>text to speech</span></li>
-        <li class="end"><b>You hear the reply</b></li>
-      </ol>
-      <i class="pulse" aria-hidden="true"></i>
+      <div class="dial">
+        <p class="number">(778) 651-3549</p>
+        <p class="dial-actions">
+          <a class="button button-primary" id="call-button" href="tel:+17786513549">Call the agent</a>
+          <a href="#test-call">Read a test call</a>
+        </p>
+        <p class="copied" id="copied" aria-live="polite"></p>
+        <p class="fine">My AI phone agent answers as a car dealership’s after-hours service line. Describe a problem with your car and it books you into a demo schedule. Free to call from Canada and the US.</p>
+      </div>
     </div>
   </div>
 </header>
@@ -366,125 +481,138 @@ footer .wrap { padding-top: 24px; padding-bottom: 40px; color: var(--night-muted
   <div class="wrap">
     <h2>Work</h2>
 
-    <article class="project" id="voiceagent">
-      <div class="project-head">
-        <h3>VoiceAgent</h3>
-        <p class="meta">Independent project, Aug 2026 – present</p>
-      </div>
-      <div class="project-body">
-        <div>
-          <p class="summary">An after-hours phone line for a car dealership’s service department. The AI agent answers real calls, sorts urgent problems from routine ones, books appointments, and routes anything safety-related to a human follow-up.</p>
-          <ul class="notes">
-            <li>Replaced hard-coded conversation trees with LLM function calling for dispatch, booking, and transfers.</li>
-            <li>An eval harness against the live Anthropic API scores 22/22 on the urgency categories, and its accuracy and latency numbers settled the choice between Haiku and Sonnet.</li>
-            <li>95% pytest coverage on the backend, with latency logged at each stage of the call.</li>
-          </ul>
-          <p class="links">
-            <span class="live">Live</span>
-            <a href="tel:+17786513549">Call (778) 651-3549</a>
-            <a href="https://pitline-dashboard.up.railway.app" target="_blank" rel="noopener">Ops dashboard</a>
-            <a href="https://github.com/azhgit/VoiceAgent" target="_blank" rel="noopener">Source code</a>
-          </p>
-          <p class="stack">Built with Python, FastAPI, Pipecat, PostgreSQL, Next.js, and Railway</p>
-        </div>
-        <figure class="sheet">
+    <article class="dwg" id="voiceagent">
+      <header class="strip">
+        <div class="night"><h3>VoiceAgent</h3><p class="meta">Independent project, <span class="nw">Aug 2026 – present</span></p></div>
+        <div><p class="lbl">Result</p><p class="result">Sorted all 22 call types correctly in testing</p></div>
+        <div><p class="lbl">Status</p><p class="links"><span class="live">Live</span><a href="tel:+17786513549" class="nw">Call (778) 651-3549</a><a href="https://pitline-dashboard.up.railway.app" target="_blank" rel="noopener">Ops dashboard</a><a href="https://github.com/azhgit/VoiceAgent" target="_blank" rel="noopener">Source code</a></p></div>
+      </header>
+      <div class="dwg-body">
+        <figure class="drawing">
           <ol class="vflow" aria-label="How a booking is made">
-            <li><div class="node"><b>Claude</b> <span>tool calls</span></div><p class="callout">22/22 on the urgency eval</p></li>
-            <li><div class="node"><b>DMS API</b> <span>FastAPI</span></div><p class="callout">Caller ID re-checked on the server</p></li>
+            <li><div class="node"><b>Claude</b> <span>tool calls</span></div><p class="callout">Haiku vs. Sonnet picked on measured accuracy and latency</p></li>
+            <li><div class="node"><b>Dealer system API</b> <span>FastAPI</span></div><p class="callout">Caller ID re-checked on the server</p></li>
             <li><div class="node"><b>PostgreSQL</b> <span>bookings and job queue</span></div><p class="callout">10 concurrent bookings for one slot: exactly one wins</p></li>
-            <li><div class="node"><b>Worker</b> <span>follow-up texts</span></div><p class="callout">Jobs claimed with SKIP LOCKED, never twice</p></li>
-            <li><div class="node"><b>Dashboard</b> <span>Next.js, live over SSE</span></div></li>
+            <li><div class="node"><b>Worker</b> <span>follow-up texts</span></div><p class="callout">Each job claimed by one worker, never twice</p></li>
+            <li><div class="node"><b>Dashboard</b> <span>Next.js, live updates</span></div></li>
           </ol>
           <figcaption>After the call: how a booking is made and followed up</figcaption>
         </figure>
+        <div class="dwg-text">
+          <p class="summary">An after-hours phone line for a car dealership’s service department. The AI agent answers real calls, sorts urgent problems from routine ones, books appointments, and routes anything safety-related to a human follow-up.</p>
+          <p class="lbl">Notes</p>
+          <ol class="drawing-notes">
+            <li>Replaced hard-coded conversation trees with LLM function calling for dispatch, booking, and transfers.</li>
+            <li>An eval harness runs every urgency category against the live Anthropic API before a prompt or model change ships.</li>
+            <li>95% pytest coverage on the backend, with latency logged at each stage of the call.</li>
+          </ol>
+          <p class="stack"><span class="lbl">Built with</span>Python, FastAPI, Pipecat, PostgreSQL, Next.js, Railway</p>
+        </div>
       </div>
+        <details class="testlog" id="test-call">
+          <summary><span class="summary-link">Read a test call</span> <span class="lbl">Brake noise, booked in two tool calls</span></summary>
+          <p class="testlog-note">Simulated call, text only. I scripted the caller’s lines. The agent’s replies are unedited output from claude-haiku-4-5, and its tool calls ran against a local seeded dealer system.</p>
+          <ol class="transcript">
+            <li><span class="who agent">Agent</span><p>Thanks for calling our after-hours service department—what’s going on with your vehicle tonight?</p></li>
+            <li><span class="who">Caller</span><p>Hi, yeah, my brakes have started making a squeaking noise when I stop. It’s not grinding or anything, the car stops fine, but I’d like to get it looked at.</p></li>
+            <li><span class="who agent">Agent</span><p>Got it—that squeaking sound when you stop is something we can definitely check out, and since your brakes are stopping fine, we can get you in as non-urgent. Let me find you some available times.</p></li>
+            <li class="tool"><span class="who">Tool</span><p><code>check_availability(urgency="non_urgent")</code><code class="ret">→ slots: Mike Alvarez 2026-10-06 08:00, Ravi Patel 2026-10-06 08:00 · outside_window: false</code></p></li>
+            <li><span class="who agent">Agent</span><p>We’ve got two options for you: Tuesday morning at 8am with Mike Alvarez, or also Tuesday at 8am with Ravi Patel—which works better for you?</p></li>
+            <li><span class="who">Caller</span><p>Tuesday at 8 with Mike works.</p></li>
+            <li><span class="who agent">Agent</span><p>Perfect—I just need your name, phone number, and your vehicle’s year, make, and model to get you booked.</p></li>
+            <li><span class="who">Caller</span><p>Sure, it’s Alex Chen, phone is <span class="nw">604-555-0199</span>, and it’s a 2018 Honda Civic.</p></li>
+            <li><span class="who agent">Agent</span><p>Let me confirm that back: Alex Chen, <span class="nw">604-555-0199</span>, 2018 Honda Civic, Tuesday at 8am with Mike Alvarez—does that all look right?</p></li>
+            <li><span class="who">Caller</span><p>Yes, that’s right.</p></li>
+            <li class="tool"><span class="who">Tool</span><p><code>book_appointment(technician_id=1, time_slot="2026-10-06T08:00:00", vehicle="2018 Honda Civic", urgency="non_urgent", …)</code><code class="ret">→ appointment #8, status: booked</code></p></li>
+            <li><span class="who agent">Agent</span><p>You’re all set—your appointment is Tuesday, October 6th at 8am with Mike Alvarez for your brake inspection!</p></li>
+            <li class="tool"><span class="who">Tool</span><p><code>end_call()</code></p></li>
+          </ol>
+          <p class="testlog-result"><span class="lbl">Outcome</span>Classified as non-urgent (brake noise, stopping normally). Two tool calls plus end_call. Booked Tuesday, October 6 at 8:00 AM with Mike Alvarez (Quick Service).</p>
+        </details>
     </article>
 
-    <article class="project" id="carbontrace">
-      <div class="project-head">
-        <h3>CarbonTrace</h3>
-        <p class="meta">Independent project, Jan 2026 – present</p>
-      </div>
-      <div class="project-body">
-        <div>
-          <p class="summary">Automates the flight-emissions lookups behind corporate ESG reports. Upload a spreadsheet of business trips and it queries the official ICAO calculator for every route, keeping a screenshot of each result as audit evidence.</p>
-          <ul class="notes">
-            <li>Designed a normalized analytics schema and REST API for year-over-year, quarter-over-quarter, and month-over-month queries.</li>
-            <li>Runs the API and Celery worker as separate Docker services on AWS ECS Fargate, built from images in ECR.</li>
-          </ul>
-          <p class="links">
-            <span class="live">Live</span>
-            <a href="https://carbontrace.up.railway.app/dashboard" target="_blank" rel="noopener">Open the dashboard</a>
-          </p>
-          <p class="stack">Built with Python, FastAPI, Celery, Redis, PostgreSQL, Playwright, Docker, and AWS ECS</p>
-        </div>
-        <figure class="sheet">
+    <article class="dwg" id="carbontrace">
+      <header class="strip">
+        <div class="night"><h3>CarbonTrace</h3><p class="meta">Independent project, <span class="nw">Jan 2026 – present</span></p></div>
+        <div><p class="lbl">Result</p><p class="result">7-year audit trail for every flight</p></div>
+        <div><p class="lbl">Status</p><p class="links"><span class="live">Live</span><a href="https://carbontrace.up.railway.app/dashboard" target="_blank" rel="noopener">Open the dashboard</a><span class="hint">Interface in Traditional Chinese</span></p></div>
+      </header>
+      <div class="dwg-body">
+        <figure class="drawing">
           <ol class="vflow" aria-label="How a travel report is processed">
             <li><div class="node"><b>Excel upload</b> <span>trips, airport pairs</span></div></li>
             <li><div class="node"><b>Celery + Redis</b> <span>one job per route</span></div><p class="callout">Distributed lock and circuit breaker ended doubled API load</p></li>
             <li><div class="node"><b>Playwright</b> <span>ICAO calculator</span></div><p class="callout">30-day cache skips repeat lookups</p></li>
-            <li><div class="node"><b>PostgreSQL + R2</b> <span>results, screenshots</span></div><p class="callout">Screenshots kept 7 years as evidence</p></li>
+            <li><div class="node"><b>PostgreSQL + R2</b> <span>results, screenshots</span></div><p class="callout">A screenshot for every route, kept 7 years</p></li>
             <li><div class="node"><b>Dashboard</b> <span>trend reports</span></div></li>
           </ol>
           <figcaption>From a trip spreadsheet to an auditable emissions report</figcaption>
         </figure>
+        <div class="dwg-text">
+          <p class="summary">Automates the flight-emissions lookups behind corporate ESG reports. Upload a spreadsheet of business trips and it queries the official ICAO calculator for every route, keeping a screenshot of each result as audit evidence.</p>
+          <p class="lbl">Notes</p>
+          <ol class="drawing-notes">
+            <li>Designed a normalized analytics schema and REST API for year-over-year, quarter-over-quarter, and month-over-month queries.</li>
+            <li>Runs the API and Celery worker as separate Docker services on AWS ECS Fargate, built from images in ECR.</li>
+          </ol>
+          <p class="stack"><span class="lbl">Built with</span>Python, FastAPI, Celery, Redis, PostgreSQL, Playwright, Docker, AWS ECS</p>
+        </div>
       </div>
     </article>
 
-    <article class="project" id="courseflow">
-      <div class="project-head">
-        <h3>CourseFlow</h3>
-        <p class="meta">Independent project, Jan – Mar 2026</p>
-      </div>
-      <div class="project-body">
-        <div>
-          <p class="summary">Course search that answers questions instead of matching keywords. It retrieves the most relevant course material and has Gemini write an answer from it.</p>
-          <ul class="notes">
-            <li>Raised retrieval precision from about 50% to about 75% by reworking chunking and structured output.</li>
-            <li>Deployed on Azure Kubernetes Service: a public load balancer serves the front end, and the API stays on an internal ClusterIP service.</li>
-          </ul>
-          <p class="links">
-            <span class="live">Live</span>
-            <a href="https://courseflow.zeabur.app" target="_blank" rel="noopener">Try the search</a>
-            <a href="https://github.com/azhgit/courseflow" target="_blank" rel="noopener">Source code</a>
-          </p>
-          <p class="stack">Built with React, FastAPI, ChromaDB, SQLite, Gemini, Docker, and Kubernetes</p>
-        </div>
-        <figure class="sheet">
+    <article class="dwg" id="courseflow">
+      <header class="strip">
+        <div class="night"><h3>CourseFlow</h3><p class="meta">Independent project, <span class="nw">Jan – Mar 2026</span></p></div>
+        <div><p class="lbl">Result</p><p class="result">Search precision up from 50% to 75%</p></div>
+        <div><p class="lbl">Status</p><p class="links"><span class="live">Live</span><a href="https://courseflow.zeabur.app" target="_blank" rel="noopener">Try the search</a><a href="https://github.com/azhgit/courseflow" target="_blank" rel="noopener">Source code</a></p></div>
+      </header>
+      <div class="dwg-body">
+        <figure class="drawing">
           <ol class="vflow" aria-label="How a question is answered">
             <li><div class="node"><b>React</b> <span>takes the question</span></div></li>
-            <li><div class="node"><b>FastAPI</b> <span>runs the search</span></div><p class="callout">Internal ClusterIP on AKS</p></li>
-            <li><div class="node"><b>ChromaDB</b> <span>finds passages</span></div><p class="callout">Precision about 50% → 75%</p></li>
-            <li><div class="node"><b>Gemini</b> <span>writes the answer</span></div><p class="callout">15-question golden set gates every change</p></li>
+            <li><div class="node"><b>FastAPI</b> <span>runs the search</span></div><p class="callout">Kept private inside the Kubernetes cluster</p></li>
+            <li><div class="node"><b>ChromaDB</b> <span>finds passages</span></div><p class="callout">Chunking reworked for better matches</p></li>
+            <li><div class="node"><b>Gemini</b> <span>writes the answer</span></div><p class="callout">15 test questions must pass before a change ships</p></li>
           </ol>
           <figcaption>From a question to a grounded answer</figcaption>
         </figure>
+        <div class="dwg-text">
+          <p class="summary">Course search that answers questions instead of matching keywords. It retrieves the most relevant course material and has Gemini write an answer from it.</p>
+          <p class="lbl">Notes</p>
+          <ol class="drawing-notes">
+            <li>Raised retrieval precision from about 50% to about 75% by reworking chunking and structured output.</li>
+            <li>Deployed on Azure Kubernetes Service: a public load balancer serves the front end, and the API stays on an internal ClusterIP service.</li>
+          </ol>
+          <p class="stack"><span class="lbl">Built with</span>React, FastAPI, ChromaDB, SQLite, Gemini, Docker, Kubernetes</p>
+        </div>
       </div>
     </article>
 
-    <article class="project" id="bfrb">
-      <div class="project-head">
-        <h3>BFRB Detection</h3>
-        <p class="meta">Graduate capstone, team of five, Jan – Apr 2026</p>
-      </div>
-      <div class="project-body">
-        <div>
-          <p class="summary">Detecting body-focused repetitive behaviors, such as hair pulling or skin picking, from multichannel sensor data by treating sensor readings like language.</p>
-          <ul class="notes">
-            <li>Designed the sensor-aware tokenizer and vocabulary for the team’s NLP workstream.</li>
-            <li>Wrote up the failure modes, including information lost in tokenization, class imbalance, and hyperparameter sensitivity.</li>
-          </ul>
-          <p class="stack">Built with Python and PyTorch</p>
-        </div>
-        <figure class="sheet">
+    <article class="dwg" id="bfrb">
+      <header class="strip">
+        <div class="night"><h3>BFRB Detection</h3><p class="meta">Graduate capstone, team of five, <span class="nw">Jan – Apr 2026</span></p></div>
+        <div><p class="lbl">My part</p><p class="status-text">Sensor-aware tokenizer and vocabulary</p></div>
+        <div><p class="lbl">Status</p><p class="status-text">Research project, not deployed</p></div>
+      </header>
+      <div class="dwg-body">
+        <figure class="drawing">
           <ol class="vflow" aria-label="How sensor data is classified">
             <li><div class="node"><b>Sensor streams</b> <span>multichannel series</span></div></li>
             <li><div class="node"><b>Tokenizer</b> <span>sensor-aware vocabulary</span></div><p class="callout">My part of the team’s work</p></li>
-            <li><div class="node"><b>Transformer</b> <span>built from scratch</span></div><p class="callout">Two designs: [CLS] and masked-mean pooling</p></li>
-            <li><div class="node"><b>Classifier</b> <span>names the behavior</span></div><p class="callout">Compared with six baselines on binary and macro F1</p></li>
+            <li><div class="node"><b>Transformer</b> <span>built from scratch</span></div><p class="callout">Two pooling designs compared</p></li>
+            <li><div class="node"><b>Classifier</b> <span>names the behavior</span></div><p class="callout">Measured against six baselines</p></li>
           </ol>
           <figcaption>From raw sensor readings to a behavior label</figcaption>
         </figure>
+        <div class="dwg-text">
+          <p class="summary">Detecting body-focused repetitive behaviors, such as hair pulling or skin picking, from multichannel sensor data by treating sensor readings like language.</p>
+          <p class="lbl">Notes</p>
+          <ol class="drawing-notes">
+            <li>Designed the sensor-aware tokenizer and vocabulary for the team’s NLP workstream.</li>
+            <li>Built two Transformer variants from scratch, [CLS] pooling and masked-mean pooling, and compared them with six baselines on binary and macro F1.</li>
+          </ol>
+          <p class="stack"><span class="lbl">Built with</span>Python, PyTorch</p>
+        </div>
       </div>
     </article>
   </div>
@@ -493,87 +621,132 @@ footer .wrap { padding-top: 24px; padding-bottom: 40px; color: var(--night-muted
 <section id="experience">
   <div class="wrap">
     <h2>Experience</h2>
-    <ol class="timeline">
-      <li class="rail">
-        <p class="when">May – Aug 2026</p>
-        <div>
-          <h3>Cloud AI Full-Stack Engineer (Intern)</h3>
-          <p class="org">ReferoLink, Vancouver</p>
-          <ul class="notes">
-            <li>Built the billing system and subscription lifecycle with Stripe, a Next.js 15 front end, and a FastAPI backend.</li>
-            <li>Made Stripe webhook handling idempotent with event deduplication and stale-event guards: zero duplicate charges, despite Stripe’s at-least-once, out-of-order delivery.</li>
-            <li>Worked on role-based access with AWS Cognito and JWT sessions, scoped across practitioners, clinics, and admins.</li>
-            <li>Integrated AWS Bedrock (Claude, Titan embeddings) into LLM-driven provider matching.</li>
-          </ul>
-        </div>
-      </li>
-      <li class="rail">
-        <p class="when">Jun 2019 – Apr 2023</p>
-        <div>
-          <h3>Front-End &amp; Full-Stack Developer</h3>
-          <p class="org">Paokai Electronics, Taiwan</p>
-          <ul class="notes">
-            <li>Designed a config-driven admin platform that let non-technical staff publish campaigns and lottery events on web and mobile without an engineering release.</li>
-            <li>Hardened a payment pipeline across three providers (ECPay, NewebPay, MyCard) with signature verification and idempotent transactions, preventing duplicate callbacks and double-crediting under promotional traffic.</li>
-            <li>Built Vue.js and ECharts dashboards that replaced manual Excel reports with near-real-time revenue and conversion metrics.</li>
-          </ul>
-        </div>
-      </li>
-      <li class="rail">
-        <p class="when">Aug 2018 – Jun 2019</p>
-        <div>
-          <h3>Back-End Web Developer</h3>
-          <p class="org">International Integrated Systems (IISI), Taiwan</p>
-          <ul class="notes">
-            <li>Built Java Spring REST APIs for a national driving-school records module.</li>
-            <li>Designed PostgreSQL schemas with composite indexes to keep nationwide compliance reports fast.</li>
-            <li>Wrote nightly batch-sync jobs with per-record state tracking, so retries and partial failures didn’t duplicate or drop records.</li>
-          </ul>
-        </div>
-      </li>
-    </ol>
+    <table class="table revs">
+      <caption class="visually-hidden">Work history, newest first</caption>
+      <thead><tr><th scope="col">Date</th><th scope="col">Role and work</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="date">May – Aug 2026</td>
+          <td>
+            <h3>Cloud AI Full-Stack Engineer (Intern)</h3>
+            <p class="org">ReferoLink, Vancouver</p>
+            <ul class="bullets">
+              <li>Built the billing system and subscription lifecycle with Stripe, a Next.js 15 front end, and a FastAPI backend.</li>
+              <li>Made Stripe webhook handling idempotent with event deduplication and <span class="nw">stale-event</span> guards, despite Stripe’s <span class="nw">at-least-once</span>, <span class="nw">out-of-order</span> delivery.</li>
+              <li>Worked on role-based access with AWS Cognito and JWT sessions, scoped across practitioners, clinics, and admins.</li>
+              <li>Integrated AWS Bedrock (Claude, Titan embeddings) into LLM-driven provider matching.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="date">Jun 2019 – Apr 2023</td>
+          <td>
+            <h3><span class="nw">Front-End</span> &amp; <span class="nw">Full-Stack</span> Developer</h3>
+            <p class="org">Paokai Electronics, Taiwan</p>
+            <ul class="bullets">
+              <li>Designed a config-driven admin platform that let non-technical staff publish campaigns and lottery events on web and mobile without an engineering release.</li>
+              <li>Hardened a payment pipeline across three providers (ECPay, NewebPay, MyCard) with signature verification and idempotent transactions, preventing duplicate callbacks and double-crediting under promotional traffic.</li>
+              <li>Built Vue.js and ECharts dashboards that replaced manual Excel reports with near-real-time revenue and conversion metrics.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="date">Aug 2018 – Jun 2019</td>
+          <td>
+            <h3>Back-End Web Developer</h3>
+            <p class="org">International Integrated Systems (IISI), Taiwan</p>
+            <ul class="bullets">
+              <li>Built Java Spring REST APIs for a national driving-school records module.</li>
+              <li>Designed PostgreSQL schemas with composite indexes to keep nationwide compliance reports fast.</li>
+              <li>Wrote nightly batch-sync jobs with per-record state tracking, so retries and partial failures didn’t duplicate or drop records.</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
 <section id="skills">
   <div class="wrap">
-    <h2>Skills</h2>
-    <dl class="rail">
-      <dt>AI and ML</dt><dd>Anthropic API, AWS Bedrock, Gemini, RAG, ChromaDB, OpenSearch, LlamaIndex, PyTorch, LLM evaluation</dd>
-      <dt>Backend</dt><dd>Python, FastAPI, Flask, Java Spring, Node.js, Celery, asyncio, REST API design, event-driven systems</dd>
-      <dt>Frontend</dt><dd>React, Next.js, TypeScript, Vue.js, ECharts</dd>
-      <dt>Data</dt><dd>PostgreSQL, MySQL, Redis, MongoDB, SQLite</dd>
-      <dt>Cloud and DevOps</dt><dd>AWS (ECS, Lambda, S3, Cognito), Azure AKS, Kubernetes, Docker, CI/CD, Railway</dd>
-    </dl>
-  </div>
-</section>
-
-<section id="education">
-  <div class="wrap">
-    <h2>Education</h2>
-    <dl class="rail">
-      <dt>M.S. Applied Computer Science</dt><dd>Fairleigh Dickinson University, Vancouver, 2026</dd>
-      <dt>B.A. Economics</dt><dd>National Taipei University, Taiwan, 2016</dd>
-    </dl>
+    <h2>Skills and education</h2>
+    <table class="table parts">
+      <caption class="visually-hidden">Skills by area</caption>
+      <tbody>
+        <tr><th scope="row">AI and ML</th><td>Anthropic API, AWS Bedrock, Gemini, RAG, ChromaDB, LlamaIndex, PyTorch, LLM evaluation</td></tr>
+        <tr><th scope="row">Backend</th><td>Python, FastAPI, Java Spring, Celery, asyncio, REST APIs, <span class="nw">event-driven</span> systems</td></tr>
+        <tr><th scope="row">Frontend</th><td>React, Next.js, TypeScript, Vue.js</td></tr>
+        <tr><th scope="row">Data and cloud</th><td>PostgreSQL, Redis, AWS (ECS, Lambda, S3, Cognito), Azure AKS, Kubernetes, Docker</td></tr>
+      </tbody>
+    </table>
+    <table class="table parts">
+      <caption class="visually-hidden">Education</caption>
+      <tbody>
+        <tr><th scope="row">M.S. Applied Computer Science</th><td>Fairleigh Dickinson University, Vancouver, 2026</td></tr>
+        <tr><th scope="row">B.A. Economics</th><td>National Taipei University, Taiwan, 2016</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
 <section id="contact" class="contact night">
   <div class="wrap">
     <h2>Contact</h2>
-    <p>I’m looking for full-stack and AI engineering roles in Vancouver or remote.</p>
-    <a class="email" href="mailto:anzheng.huang.dev@gmail.com">anzheng.huang.dev@gmail.com</a>
-    <p class="elsewhere">
-      <a href="https://github.com/azhgit" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://linkedin.com/in/ahuang-datasci" target="_blank" rel="noopener">LinkedIn</a>
-    </p>
+    <div class="endblock">
+      <div class="eb-name"><p class="eb-title">Andrew Huang</p><p class="meta">Software engineer, Vancouver, BC</p></div>
+      <div class="eb-email"><p class="lbl">Email</p><a class="email" id="footer-email" href="mailto:anzheng.huang.dev@gmail.com">anzheng.<wbr>huang.<wbr>dev<wbr>@gmail.com</a><p class="eb-tip" id="footer-copied" role="status" aria-live="polite"></p></div>
+      <div><p class="lbl">GitHub</p><a href="https://github.com/azhgit" target="_blank" rel="noopener">azhgit</a></div>
+      <div><p class="lbl">LinkedIn</p><a href="https://linkedin.com/in/ahuang-datasci" target="_blank" rel="noopener">ahuang-datasci</a></div>
+    </div>
   </div>
 </section>
 </main>
 
 <footer class="night">
-  <div class="wrap"><p>© 2026 Andrew Huang</p></div>
+  <div class="wrap"><p>© 2026 Andrew Huang</p><a href="#" class="to-top">Back to top<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M6 10.5V1.5M2 5.5l4-4 4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
 </footer>
 
+<script>
+(function () {
+  // Links to the test call open it before jumping there.
+  var log = document.getElementById('test-call');
+  if (location.hash === '#test-call') log.open = true;
+  document.querySelectorAll('a[href="#test-call"]').forEach(function (link) {
+    link.addEventListener('click', function () { log.open = true; });
+  });
+})();
+(function () {
+  // On a laptop, tel: and mailto: links often have no app to open, so these buttons copy instead.
+  if (!matchMedia('(pointer: fine)').matches || !navigator.clipboard) return;
+  var button = document.getElementById('call-button'), status = document.getElementById('copied');
+  button.textContent = 'Copy number';
+  button.addEventListener('click', function (event) {
+    event.preventDefault();
+    navigator.clipboard.writeText('+1 778 651 3549').then(function () {
+      status.textContent = 'Number copied. Call it from your phone.';
+    }, function () {
+      status.textContent = 'Couldn’t copy. The number is (778) 651-3549.';
+    });
+  });
+
+  function copyEmail(link, tip, message) {
+    var timer;
+    link.addEventListener('click', function (event) {
+      event.preventDefault();
+      navigator.clipboard.writeText('anzheng.huang.dev@gmail.com').then(function () {
+        tip.textContent = message;
+      }, function () {
+        tip.textContent = 'anzheng.huang.dev@gmail.com';
+      });
+      clearTimeout(timer);
+      timer = setTimeout(function () { tip.textContent = ''; }, 3000);
+    });
+  }
+  var navEmail = document.getElementById('email-button');
+  navEmail.textContent = 'Copy email';
+  copyEmail(navEmail, document.getElementById('email-copied'), 'Copied anzheng.huang.dev@gmail.com');
+  copyEmail(document.getElementById('footer-email'), document.getElementById('footer-copied'), 'Email copied');
+})();
+</script>
 </body>
 </html>
